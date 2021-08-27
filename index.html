@@ -16,10 +16,19 @@
 </head>
 <body>
     <div class = "container">
+        <div class = "row">
+            <h1>
+                Weather Dashboard
+            </h1>
+        </div>
         <div class ="row">
             <div class = "col-md-2">
-                <label for = "weather-search">Search For a City</label>
-                <input type="text" id = "weather-search">
+                <form class="form-inline my-2 my-lg-0" onsubmit="return false">
+                    <label for = "weather-search">Search For a City</label>
+                    <input id = "weather-search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <!--Prevent reload for search button:$("#prospects_form").submit(function(e){e.preventDefault();}); -->
+                    <button id = "weather-button" class="btn btn-primary my-2 my-sm-0" type="submit" data-bs-toggle = "collapse" data-bs-target="#collapse-target">Search</button>
+                </form>
             </div>
             <div class = "col-md-10">
                 <div class ="row"> <!--Don't Need Columns For This Row-->
@@ -27,7 +36,7 @@
                     Test
                     </h1>
                 </div>
-                <div class = "row">
+                <div class = "row collapse" id = "collapse-target">
                     <div class = "col-md-2">
                         <h1>Test2</h1>
                     </div>
