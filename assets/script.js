@@ -8,6 +8,17 @@
 function renderSearch(){
 
 }
+let unixDate = 1630195631;
+
+let date = new Date(unixDate * 1000);
+
+let year = date.getFullYear();
+
+let month = date.getMonth();
+
+let day = date.getDate();
+
+console.log(`(${month}/${day}/${year})`)
 
  function weatherSearch(){
      //clear results display
@@ -16,7 +27,9 @@ function renderSearch(){
     var cityName = $("#weather-search").val();
     //replace weather query with one ca query using lat and lon
     var forecastQueryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=9e04f2b6c335750c8cfb2144be29b60f`
-    //call to get 5 day forecast object
+    //call to get 5 day forecast object, list array items response.list[0, 8, 16, 24, 32].main.temp/humidity to get next 5 days, 
+    //response.list[0, 8, 16, 24, 32].weather[0].icon to get weather symbol
+    //create div.addClass("col-md-2").append(all the weather info)
     $.ajax({
         url: forecastQueryURL,
         method: "GET"
@@ -32,12 +45,17 @@ function renderSearch(){
             method: "GET"
         }).then(function(response){
             console.log(response)
-            var resultHeader = $("<h1>").text(cityName)
+            var startDate = parseInt(response.current.dt);
+            var newDate = new Date(startDate * 1000);
+            var year = newDate.getFullYear();
+            var month = newDate.getMonth();
+            var day = newDate.getDate();
+            var resultHeader = $("<h1>").text(`${cityName} (${month}/${day}/${year})`)
             var currentIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.current.weather[0].icon}.png`)
             $(resultHeader).append(currentIcon)
-            var currentTemp = $("<p>").text(`Temperature: ${response.current.temp}`)
-            var currentWindSpeed = $("<p>").text(`Wind Speed: ${response.current.wind_speed}`)
-            var currentHumidity = $("<p>").text(`Humidity: ${response.current.humidity}`)
+            var currentTemp = $("<p>").text(`Temperature: ${response.current.temp}°F`)
+            var currentWindSpeed = $("<p>").text(`Wind Speed: ${response.current.wind_speed} MPH`)
+            var currentHumidity = $("<p>").text(`Humidity: ${response.current.humidity}%`)
             var currentUVI = $("<p>").text(`UV Index: ${response.current.uvi}`)
             $("#currentForecast").append(resultHeader).append(currentTemp).append(currentWindSpeed).append(currentHumidity).append(currentUVI)
         })
