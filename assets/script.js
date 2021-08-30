@@ -1,18 +1,19 @@
 
 //create search hitory element on each search that get same results as original search
 function generateResults(response){
-    for(i=0;i<40;i+=8){
-        // need date, icon, temp, and humidity- 
-        //call to get 5 day forecast object, list array items response.list[0, 8, 16, 24, 32].main.temp/humidity to get next 5 days, 
-        //response.list[0, 8, 16, 24, 32].weather[0].icon to get weather symbol
-        // response.lost[0, 8, 16, 24, 32].dt to get date for conversion
-        // create div.addClass("col-md-2").append(all the weather info)
-        var cityName = $("#weather-search").val();
+    for(i=0;i<40;i+=8){ 
+        // create $("<div>").addClass("col-md-2").append(all the weather info)
         var fiveDayDiv = $("#five-day")
         var startDate = parseInt(response.list[i].dt);
         var newDate = new Date(startDate * 1000).toLocaleDateString("en-US");
-        var dateHeading = $("<h2>").text(`${cityName} (${newDate})`)
-        $(fiveDayDiv).append(dateHeading)
+        var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`)
+        var dateHeading = $("<h2>").text(`${newDate}`)
+        var iconP = $("<p>").append(weatherIcon)
+        var forecastTemp = $("<p>").text(`Temperature: ${response.list[i].main.temp}°F`)
+        var forecastHumidity = $("<p>").text(`Humidity: ${response.list[i].main.humidity}%`)
+        var forecastCol = $("<div>").addClass("col-md-2");
+        $(forecastCol).append(dateHeading).append(iconP).append(forecastTemp).append(forecastHumidity);
+        $(fiveDayDiv).append(forecastCol);
     }
 }
  function weatherSearch(){
