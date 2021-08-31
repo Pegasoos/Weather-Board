@@ -16,14 +16,14 @@
 <body>
     <div class = "container">
         <div class = "row">
-            <h1>
+            <h1 class = "bg-dark text-white text-center">
                 Weather Dashboard
             </h1>
         </div>
         <div class ="row">
-            <div class = "col-md-2">
+            <div class = "col-md-2 bg-light">
                 <form class="form-inline my-2 my-lg-0" onsubmit="return false">
-                    <label for = "weather-search">Search For a City</label>
+                    <label for = "weather-search">Search For a City:</label>
                 <div class = "row" id = "search-history">
                     <input id = "weather-search" class="form-control mr-sm-2 weather-search" type="text" placeholder="Search" aria-label="Search">
                     <button id = "search-button" class="btn btn-primary my-2 my-sm-0 weather-button" type="submit">Search</button>
@@ -31,7 +31,7 @@
                 </div>
         </div>
             <div class = "col-md-10">
-                <div class ="row"> <!--Current Day Goes Here-->
+                <div class ="row rounded-1 border border-1 border-secondary border-end-0"> <!--Current Day Goes Here-->
                     <div id = "currentForecast" >
 
                     </div>

@@ -5,7 +5,7 @@ function searchHistory(){
     var cityName = $(".weather-search").val();
     var historyButton = $("<button>").val(cityName);
     $(historyButton).text($(historyButton).val());
-    $(historyButton).addClass("weather-button");
+    $(historyButton).addClass("weather-button border border-1 border-light");
     $(historyButton).attr("id", "history-search")
     var searchHistoryDiv = $("#search-history")
     $(historyButton).on("click", weatherSearch)
@@ -15,17 +15,19 @@ function searchHistory(){
 //use weather search class to trigger search on both original search and generated buttons, above code to synchronize button text and code
 //weather-button, weather-search now classes for button generation
 function generateResults(response){
-    
+    var fiveDayHeader = $("<h1>").text("Five Day Forecast:")
+    var fiveDayDiv = $("#five-day")
+    $(fiveDayDiv).append(fiveDayHeader)
     for(i=0;i<40;i+=8){
-        var fiveDayDiv = $("#five-day")
+        
         var startDate = parseInt(response.list[i].dt);
         var newDate = new Date(startDate * 1000).toLocaleDateString("en-US");
         var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`)
         var dateHeading = $("<h2>").text(`${newDate}`)
         var iconP = $("<p>").append(weatherIcon)
-        var forecastTemp = $("<p>").text(`Temperature: ${response.list[i].main.temp}°F`)
+        var forecastTemp = $("<p>").text(`Temp: ${response.list[i].main.temp}°F`)
         var forecastHumidity = $("<p>").text(`Humidity: ${response.list[i].main.humidity}%`)
-        var forecastCol = $("<div>").addClass("col-md-2");
+        var forecastCol = $("<div>").addClass("col-md-2 m-3 bg-primary text-white rounded-1");
         $(forecastCol).append(dateHeading).append(iconP).append(forecastTemp).append(forecastHumidity);
         $(fiveDayDiv).append(forecastCol);
     }
@@ -42,7 +44,9 @@ function generateResults(response){
     else{
         var cityName = $(".weather-search").val();
     }
-    
+
+    localStorage.setItem("lastSearch", cityName)
+
     var forecastQueryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=9e04f2b6c335750c8cfb2144be29b60f`
 
     $.ajax({
@@ -73,13 +77,13 @@ function generateResults(response){
             var currentUVI = $("<p>").text(`UV Index: `)
             var uviSpan = $("<span>").text(`${response.current.uvi}`) 
             if(response.current.uvi < 3){
-                $(uviSpan).addClass("bg-success")
+                $(uviSpan).addClass("bg-success rounded-1")
             }
             else if(response.current.uvi > 6){
-                $(uviSpan).addClass("bg-danger")
+                $(uviSpan).addClass("bg-danger rounded-1")
             }
             else{
-                $(uviSpan).addClass("bg-warning")
+                $(uviSpan).addClass("bg-warning rounded-1")
             }
             $(currentUVI).append(uviSpan)
             //add class to current uvi that changes color based on number
@@ -91,4 +95,8 @@ function generateResults(response){
     searchHistory();
     }
 }
+$(document).ready(function(){
+    $(".weather-search").val(localStorage.getItem("lastSearch"));
+    weatherSearch()
+})
 $(".weather-button").on("click", weatherSearch)
