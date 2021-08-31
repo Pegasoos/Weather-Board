@@ -70,7 +70,19 @@ function generateResults(response){
             var currentTemp = $("<p>").text(`Temperature: ${response.current.temp}°F`)
             var currentWindSpeed = $("<p>").text(`Wind Speed: ${response.current.wind_speed} MPH`)
             var currentHumidity = $("<p>").text(`Humidity: ${response.current.humidity}%`)
-            var currentUVI = $("<p>").text(`UV Index: ${response.current.uvi}`)
+            var currentUVI = $("<p>").text(`UV Index: `)
+            var uviSpan = $("<span>").text(`${response.current.uvi}`) 
+            if(response.current.uvi < 3){
+                $(uviSpan).addClass("bg-success")
+            }
+            else if(response.current.uvi > 6){
+                $(uviSpan).addClass("bg-danger")
+            }
+            else{
+                $(uviSpan).addClass("bg-warning")
+            }
+            $(currentUVI).append(uviSpan)
+            //add class to current uvi that changes color based on number
             $("#currentForecast").append(resultHeader).append(currentTemp).append(currentWindSpeed).append(currentHumidity).append(currentUVI)
         })
     })
