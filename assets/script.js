@@ -5,7 +5,7 @@ function searchHistory(){
     var cityName = $(".weather-search").val();
     var historyButton = $("<button>").val(cityName);
     $(historyButton).text($(historyButton).val());
-    $(historyButton).addClass("weather-button border border-1 border-light");
+    $(historyButton).addClass("weather-button bg-info border border-1 border-light");
     $(historyButton).attr("id", "history-search")
     var searchHistoryDiv = $("#search-history")
     $(historyButton).on("click", weatherSearch)
@@ -19,7 +19,7 @@ function generateResults(response){
     var fiveDayDiv = $("#five-day")
     $(fiveDayDiv).append(fiveDayHeader)
     for(i=0;i<40;i+=8){
-        
+        //creating elements to display information for each day and appending them to 5 Day Forecast Div
         var startDate = parseInt(response.list[i].dt);
         var newDate = new Date(startDate * 1000).toLocaleDateString("en-US");
         var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`)
