@@ -6,3 +6,5 @@
 ### HTML5, Bootstrap CSS Framework, Javascript, Jquery, Open Weather Map API
 ## Usage
 ### The application can be accessed here: https://pegasoos.github.io/Weather-Board/
+## Acknowledgements
+### The folks over at https://openweathermap.org/
