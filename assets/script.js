@@ -11,7 +11,6 @@ function searchHistory(){
     $(historyButton).on("click", weatherSearch)
     $(searchHistoryDiv).append(historyButton);
 }
-
 //use weather search class to trigger search on both original search and generated buttons, above code to synchronize button text and code
 //weather-button, weather-search now classes for button generation
 function generateResults(response){
@@ -22,7 +21,7 @@ function generateResults(response){
         //creating elements to display information for each day and appending them to 5 Day Forecast Div
         var startDate = parseInt(response.list[i].dt);
         var newDate = new Date(startDate * 1000).toLocaleDateString("en-US");
-        var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`)
+        var weatherIcon = $("<img>").attr("src", `https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`)
         var dateHeading = $("<h2>").text(`${newDate}`)
         var iconP = $("<p>").append(weatherIcon)
         var forecastTemp = $("<p>").text(`Temp: ${response.list[i].main.temp}°F`)
@@ -44,10 +43,9 @@ function generateResults(response){
     else{
         var cityName = $(".weather-search").val();
     }
-
     localStorage.setItem("lastSearch", cityName)
 
-    var forecastQueryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=9e04f2b6c335750c8cfb2144be29b60f`
+    var forecastQueryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=9e04f2b6c335750c8cfb2144be29b60f`
 
     $.ajax({
         url: forecastQueryURL,
@@ -69,7 +67,7 @@ function generateResults(response){
             var startDate = parseInt(response.current.dt);
             var newDate = new Date(startDate * 1000).toLocaleDateString("en-US");
             var resultHeader = $("<h1>").text(`${cityName} (${newDate})`)
-            var currentIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${response.current.weather[0].icon}.png`)
+            var currentIcon = $("<img>").attr("src", `https://openweathermap.org/img/wn/${response.current.weather[0].icon}.png`)
             $(resultHeader).append(currentIcon)
             var currentTemp = $("<p>").text(`Temperature: ${response.current.temp}°F`)
             var currentWindSpeed = $("<p>").text(`Wind Speed: ${response.current.wind_speed} MPH`)
